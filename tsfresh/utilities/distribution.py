@@ -15,7 +15,7 @@ from collections.abc import Generator, Iterable
 from functools import partial
 from itertools import islice, repeat, takewhile
 from multiprocessing import Pool
-from ray.util.multiprocessing import RPool
+from ray.util.multiprocessing import Pool as RPool
 
 from tqdm import tqdm
 
