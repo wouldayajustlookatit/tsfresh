@@ -496,9 +496,6 @@ class MultiprocessingDistributor(IterableDistributorBaseClass):
 
 
 class RayMultiprocessingDistributor(IterableDistributorBaseClass):
-    """
-    Distributor using a multiprocessing Pool to calculate the jobs in parallel on the local machine.
-    """
 
     def __init__(
         self,
@@ -507,18 +504,6 @@ class RayMultiprocessingDistributor(IterableDistributorBaseClass):
         progressbar_title="Feature Extraction",
         show_warnings=True,
     ):
-        """
-        Creates a new MultiprocessingDistributor instance
-
-        :param n_workers: How many workers should the multiprocessing pool have?
-        :type n_workers: int
-        :param disable_progressbar: whether to show a progressbar or not.
-        :type disable_progressbar: bool
-        :param progressbar_title: the title of the progressbar
-        :type progressbar_title: basestring
-        :param show_warnings: whether to show warnings or not.
-        :type show_warnings: bool
-        """
         self.pool = RPool(ray_address="auto")
         self.n_workers = n_workers
         self.disable_progressbar = disable_progressbar
@@ -539,7 +524,7 @@ class RayMultiprocessingDistributor(IterableDistributorBaseClass):
         :return: The result of the calculation as a list - each item should be the result of the application of func
             to a single element.
         """
-        return self.pool.imap_unordered(partial(func, **kwargs), partitioned_chunks)
+        return self.pool.imap_unordered(func(**kwargs), partitioned_chunks)
 
     def close(self):
         """
