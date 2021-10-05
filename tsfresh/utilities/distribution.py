@@ -524,7 +524,7 @@ class RayMultiprocessingDistributor(IterableDistributorBaseClass):
         :return: The result of the calculation as a list - each item should be the result of the application of func
             to a single element.
         """
-        return self.pool.imap_unordered(func(**kwargs), partitioned_chunks)
+        return self.pool.imap_unordered(partial(func, **kwargs), partitioned_chunks)
 
     def close(self):
         """
